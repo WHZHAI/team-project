@@ -31,7 +31,7 @@ class NodeHandle(models.Model):
 
 class Movie(NodeHandle):
 
-    def __str__(self):
+    def __str__(self): # Called when str()
         return self.title
 
     def _title(self):
@@ -95,3 +95,19 @@ class Person(NodeHandle):
                            'relationships': movie['relationships']})
         return movies
     movies = property(_movies)
+
+class Document(models.Model):
+    def node(self):
+        return db.get_node(self.__class__.__name__)
+
+    def __str__(self):
+        return self.name
+
+    def _name(self):
+        try:
+            return node().properties.get('name', 'Missing name')
+        except AttributeError:
+            return 'Missing node?'
+    name = property(_name)
+
+    

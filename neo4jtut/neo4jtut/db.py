@@ -14,6 +14,13 @@ def get_node(handle_id, label):
         for record in result:
             return record['n']
 
+# My get_node
+def get_node(label):
+    q = 'MATCH (n:%s) RETURN n' % label
+    with manager.session as s:
+        result = s.run(q)
+        for record in result:
+            return record['n']
 
 def delete_node(handle_id, label):
     q = '''
@@ -90,3 +97,23 @@ def get_movies(handle_id):
         result = s.run(q, {'handle_id': handle_id})
         for record in result:
             yield {'handle_id': record['movie.handle_id'], 'relationships': record['relationships']}
+
+def get_articles():
+    q = """
+        MATCH (article:ARTICLE)
+        RETURN article
+        """
+    with manager.session as s:
+        result = s.run(q, {})
+        for record in result:
+            yield {'name': record['article']['name'],}
+
+def get_article_num_by_author():
+    q ="""
+        MATCH (a:PERSON)-[r:WRITES]->() 
+        RETURN a.name AS name, count(a.name) AS total_article
+       """
+    with manager.session as s:
+        result = s.run(q, {})
+        for record in result:
+            yield {'name': record['name'], 'total_article': record['total_article']}

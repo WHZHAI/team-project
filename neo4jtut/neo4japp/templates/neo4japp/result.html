@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}{{ block.super }} | Home{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h1>Result</h1>
+        <p>Query: {{query}}</p>
+        <div>
+            {% if type == "list"%}
+                {% for datum in data%}
+                <p>{{datum}}</p>
+                {% endfor %}
+            {% elif type == "canvas"%}
+                {{data}}
+                <img src="result.png"/>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

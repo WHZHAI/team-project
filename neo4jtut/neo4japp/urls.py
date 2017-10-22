@@ -3,7 +3,7 @@
 from __future__ import absolute_import
 
 from django.conf.urls import url
-from .views import MovieListView, MovieDetailView, PersonListView, PersonDetailView, index
+from .views import MovieListView, MovieDetailView, PersonListView, PersonDetailView, index, query, result
 
 __author__ = 'lundberg'
 
@@ -14,4 +14,6 @@ urlpatterns = [
     url(r'^movies/(?P<pk>[\d]+)/$', MovieDetailView.as_view(), name='movie-detail'),
     url(r'^persons/$', PersonListView.as_view(), name='person-list'),
     url(r'^persons/(?P<pk>[\d]+)/$', PersonDetailView.as_view(), name='person-detail'),
+    url(r'^query/$', query, name='query'),
+    url(r'^result/$', result, name='result'),
 ]

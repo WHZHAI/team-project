@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}{{ block.super }} | Home{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h1>Result</h1>
+        <p>Query: {{query}}</p>
+        <div>
+            <img src="result.png"/>
+        </div>
+    </div>
+{% endblock %}

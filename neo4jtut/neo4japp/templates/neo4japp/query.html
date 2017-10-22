@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}{{ block.super }} | Home{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h1>Query</h1>
+        <form action="{% url 'result'%}" method="post">
+            {% csrf_token %}
+            <div class="input-group input-group-lg">
+                <input type="text" class="form-control" placeholder="Ex. list all document names" aria-describedby="sizing-addon1" name="query" id="query">
+                <span class="input-group-btn">
+                    <input class="btn btn-success" type="submit" value="Go" />
+                </span>
+            </div>
+        </form>
+    </div>
+{% endblock %}
