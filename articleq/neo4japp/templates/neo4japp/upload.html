@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{{ block.super }} | Home{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h1>Upload</h1>
+        <div>
+            <form action="{% url 'upload_done' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="file-upload">File: .html type</label>
+                    <input id="file-upload" class="form-control" type="file" name="myfiles" multiple>
+                </div>
+                <button class="btn btn-success btn-sm" type="submit">{% trans "Save" %}</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

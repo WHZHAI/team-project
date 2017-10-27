@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}{{ block.super }} | Home{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h1>Upload done</h1>
+        {% for file in list_files %}
+            <div>
+                <p>File name: {{file.file_name}}</p>
+                <p>JSON: {{file.json}}</p>
+            </div>
+            <hr>
+        {% endfor %}
+    </div>
+{% endblock %}
