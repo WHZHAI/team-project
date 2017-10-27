@@ -4,7 +4,7 @@ Go to a directory of you choice and clone this repository:
 
 ```
 git clone https://github.com/panpan2557/ArticleQ.git
-cd ArticleQ
+cd articleq
 ```
 
 Create virtualenv inside the repository and activate it:
@@ -41,9 +41,9 @@ Edit articleq/articleq/setting.py, change the password to the one that has been 
 Then, run following code.
 
 ```
-python neo4jtut/manage.py migrate
-python neo4jtut/manage.py bootstrap
-python neo4jtut/manage.py runserver
+python articleq/manage.py migrate
+python articleq/manage.py bootstrap
+python articleq/manage.py runserver
 ```
 
 Go to http://localhost:8000 in your favorite browser to see the tutorial app.
