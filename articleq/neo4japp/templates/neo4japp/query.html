@@ -6,12 +6,17 @@
         <h1>Query</h1>
         <form action="{% url 'result'%}" method="post">
             {% csrf_token %}
-            <div class="input-group input-group-lg">
-                <input type="text" class="form-control" placeholder="Ex. list all document names" aria-describedby="sizing-addon1" name="query" id="query">
-                <span class="input-group-btn">
-                    <input class="btn btn-success" type="submit" value="Go" />
-                </span>
+            <div class="row padding-top">
+                <div class="col-xs-10">
+                    <input type="text" class="form-control" placeholder="Ex. list all document names" name="query" id="query">
+                </div>
+                    <input class="btn btn-success col-xs-2" type="submit" value="Go" id="go" />
+               
+                <input type="text" name="json" id="json" style="display:none;"/>
             </div>
         </form>
     </div>
+    {% load staticfiles %}
+    <script src="{% static "awesomplete-gh-pages/awesomplete.js" %}"></script>
+    <script src="{% static "js/queryScript.js" %}"></script>
 {% endblock %}

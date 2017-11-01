@@ -9,7 +9,7 @@ __author__ = 'lundberg'
 
 urlpatterns = [
     # Index view
-    url(r'^$', index),
+    url(r'^$', query),
     url(r'^query/$', query, name='query'),
     url(r'^result/$', result, name='result'),
     url(r'^upload/$', upload, name='upload'),

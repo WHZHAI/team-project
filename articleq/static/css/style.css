@@ -4,3 +4,17 @@
     margin-right: auto;
     width: 100%;
 }
+
+#query {
+    width: 100%;
+    display: block;
+}
+
+#go {
+    padding: 0px;
+    /* font-size: 14px; */
+}
+
+.padding-top {
+    padding-top: 40px;
+}
