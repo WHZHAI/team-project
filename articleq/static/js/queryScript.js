@@ -4,8 +4,8 @@ INV = 1
 rel = {
     "write": ["written", "written by"],
     "classify as": ["classified as", "that classified"],
-    "mention": ["mentions", "mentioned by"],
-    "mention many time": ["mentions (many times)", "mentioned (many times) by"],
+    "mention": ["that mentions", "mentioned by"],
+    "mention many time": ["that mentions (many times)", "mentioned (many times) by"],
     "classify by": ["classified by", "that classified"],
     "issue by": ["issued by", "that issued"],
     "tag": ["were tagged as", "that tagged"],
@@ -19,9 +19,9 @@ rel_node = {
     "written by": ["document", "person"],
     "classified as": ["document", "classification"], 
     "that classified": ["classification", "document"],
-    "mentions": ["document", ["person", "location", "organization", "money", "percentage", "date", "time"]], 
+    "that mentions": ["document", ["person", "location", "organization", "money", "percentage", "date", "time"]], 
     "mentioned by": [["person", "location", "organization", "money", "percentage", "date", "time"], "document"],
-    "mentions (many times)": ["document", "context"], 
+    "that mentions (many times)": ["document", "context"], 
     "mentioned (many times) by": ["context", "document"],
     "classified by": ["document", "person"], 
     "that classified": ["person", "document"],
@@ -31,6 +31,7 @@ rel_node = {
     "that tagged": ["tag", "document"],
     "reviewed as": ["document", "sensitive"], 
     "of": ["sensitive", "document"]
+    // "issue in" and "locate in" => too new
 }
 
 rel_db_name = {
@@ -38,7 +39,7 @@ rel_db_name = {
     "written by": "WRITES",
     "classified as": "IS CLASSIFIED AS", 
     "that classified": "IS CLASSIFIED AS",
-    "mentions": "MENTIONS", 
+    "that mentions": "MENTIONS", 
     "mentioned by": "MENTIONS",
     "mentions (many times)": "MENTIONS MANY TIMES", 
     "mentioned (many times) by": "MENTIONS MANY TIMES",
@@ -167,6 +168,7 @@ validQuery = [{state: "open"}, {state: "graph_keyword"}, {state: "label"},
                 {state: "relationship"}, {state: "determiner"}, {state: "label"}]
 
 valid = false
+states = []
   
 doValid = function(v) {
     if (v) {
@@ -263,7 +265,7 @@ update = function(e) {
                     if (contain(phrase, ql["label"])) {
                         input._list = ql["rel_list"][phrase]
                         input.evaluate()
-                        states.push({state: "label", phrase: phrase})
+                        states.push({state: "label", phrase: phrase, db_name: label_db_name[phrase]})
                         phrase = ""
                     }
                 } else if (current_state.state == "label") {
@@ -278,7 +280,7 @@ update = function(e) {
                         if (contain(phrase, ql["rel_list"][current_state.phrase])) {
                             input._list = ql["determiner"] // each
                             input.evaluate()
-                            states.push({state: "relationship", phrase: phrase})
+                            states.push({state: "relationship", phrase: phrase, db_name: rel_db_name[phrase]})
                             phrase = "";
                         }
                     }
@@ -287,16 +289,30 @@ update = function(e) {
                     // possible next state: 
                     console.log("rel_node: " + rel_node[current_state.phrase][1])
                     if (contain(phrase, ql["determiner"])) {
-                        input._list = [rel_node[current_state.phrase][1]] // the end of relationship
+                        console.log("possible label: ")
+                        nodes = rel_node[current_state.phrase][1]
+                        if (!Array.isArray(nodes)) {
+                            input._list = [nodes] // the end of relationship
+                        }
+                        else {
+                            input._list = nodes
+                        }
                         input.evaluate()
-                        states.push({state: "determiner", phrase: phrase, possible_label: rel_node[current_state.phrase][1]})
+                        states.push({state: "determiner", phrase: phrase, possible_label: nodes})
                         phrase = "";
                     }
                 } else if (current_state.state == "determiner") {
                     // possible next state: 
                     console.log("possible_label: " + current_state.possible_label)
-                    if (contain(phrase, [current_state.possible_label])) {
-                        states.push({state: "label", phrase: phrase})
+                    console.log("phrase: " + phrase)
+                    isContain = false
+                    if (Array.isArray(current_state.possible_label)) {
+                        isContain = contain(phrase, current_state.possible_label)
+                    } else {
+                        isContain = contain(phrase, [current_state.possible_label])
+                    }
+                    if (isContain) {
+                        states.push({state: "label", phrase: phrase, db_name: label_db_name[phrase]})
                         console.log(JSON.stringify(states, null, 4))
                         phrase = "";
                     }
@@ -306,6 +322,8 @@ update = function(e) {
         if (phrase != "") // after reset the phrase, no need to add a space
             phrase += " "
     }
+
+    console.log("states: " + JSON.stringify(states, null, 4))
 
     checkValid()
 }

@@ -37,6 +37,7 @@ def result(request):
     query = request.POST['query']
     json = request.POST['json']
 
+    print ("query: " + query + ", json:" + json)
     """
     Send the 'raw' query to QueryProcessor.
     Get the processed data back, where the processed data have 2 properties,
@@ -45,7 +46,7 @@ def result(request):
     Each type of data will be handled differently as below.
     """
 
-    process_data = QueryProcessor.process_query(query)
+    process_data = QueryProcessor.process_query(query, json)
 
     if process_data[0] == "list":
         return render(request, 'neo4japp/result.html', {'query': query, 'type':process_data[0], 'data': process_data[1]})
