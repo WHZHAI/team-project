@@ -9,7 +9,9 @@ rel = {
     "classify by": ["classified by", "that classified"],
     "issue by": ["issued by", "that issued"],
     "tag": ["were tagged as", "that tagged"],
-    "review as": ["reviewed as", "of"]
+    "review as": ["reviewed as", "of"],
+    "issue in": ["issued in", "issued in"],
+    "locate in": ["located in", "located in"]
 }
 
 rel_node = {
@@ -31,15 +33,52 @@ rel_node = {
     "of": ["sensitive", "document"]
 }
 
+rel_db_name = {
+    "write": "WRITES",
+    "written by": "WRITES",
+    "classified as": "IS CLASSIFIED AS", 
+    "that classified": "IS CLASSIFIED AS",
+    "mentions": "MENTIONS", 
+    "mentioned by": "MENTIONS",
+    "mentions (many times)": "MENTIONS MANY TIMES", 
+    "mentioned (many times) by": "MENTIONS MANY TIMES",
+    "classified by": "IS CLASSIFIED BY", 
+    "that classified": "IS CLASSIFIED BY",
+    "issued by": "IS ISSUED BY", 
+    "that issued": "IS ISSUED BY",
+    "were tagged as": "TAGS", 
+    "that tagged": "TAGS",
+    "reviewed as": "IS REVIEWED AS", 
+    "of": "IS REVIEWED AS",
+    // new relationship
+    "located in": "IS LOCATED IN",
+    "issued in": "IS ISSUED IN"
+}
+
+label_db_name = {
+    "document": "DOC",
+    "sensitivity": "SENSITIVITY", 
+    "person": "PERSON", 
+    "location": "LOCATION", 
+    "organization": "ORGANIZATION",
+    "classification": "CLASSIFICATION", 
+    "tag": "TAG", 
+    "context": "CONTEXT", 
+    "money": "MONEY", 
+    "pecentage": "PERCENTAGE", 
+    "date": "DATE", 
+    "time": "TIME"
+}
+
 ql = {
     "open": ["show", "find"],
     "label": ["document", "sensitivity", "person", "location", "organization", "classification", "tag", "context", "money", "pecentage", "date", "time"],
     "property": {
-        "document": ["id", "title", "created date", "released date", "subject", "number of words", "number of paragraphs", "reference"],
+        "document": ["id", "title", "created date", "released date", "subject", "words", "paragraphs", "REF", "doctype"],
         "sensitivity": ["value"],
-        "person": ["name"],
-        "location": ["name"],
-        "organization": ["name"],
+        "person": ["name", "position"],
+        "location": ["name", "latitude", "longtitude"],
+        "organization": ["name", "latitude", "longtitude"],
         "classification": ["classified type"],
         "tag": ["name"],
         "context": ["words"], 
@@ -51,10 +90,10 @@ ql = {
     "graph_keyword": ["the scatter of", "the number of", "the trend of", "the percentage of"],
     "determiner": ["each"],
     "rel_list": {
-        "document": [rel["write"][INV], rel["classify as"][DIR], rel["mention"][DIR], rel["mention many time"][DIR], rel["classify by"][DIR], rel["issue by"][DIR], rel["tag"][DIR], rel["review as"][DIR]],
+        "document": [rel["write"][INV], rel["classify as"][DIR], rel["mention"][DIR], rel["mention many time"][DIR], rel["classify by"][DIR], rel["issue by"][DIR], rel["tag"][DIR], rel["review as"][DIR], rel["issue in"][DIR]],
         "sensitivity": [rel["review as"][INV]],
         "person": [rel["write"][DIR], rel["mention"][INV], rel["classify by"][INV]],
-        "location": [rel["mention"][INV]],
+        "location": [rel["mention"][INV], rel["locate in"][INV], rel["locate in"][DIR]],
         "organization": [rel["mention"][INV], rel["issue by"][INV]],
         "classification": [rel["classify as"][INV]],
         "tag": [rel["tag"][INV]],

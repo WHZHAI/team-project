@@ -37,5 +37,5 @@ def process_query(query):
         ax.set_xticklabels(data[:, 0])
         ax.set_ylabel('Total Articles')
         fig.autofmt_xdate(bottom=0.2, rotation=70, ha='right')
-        return ["matplotlib"]
+        return ["matplotlib", plt]
     # else:

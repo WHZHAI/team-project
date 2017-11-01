@@ -11,6 +11,7 @@ import io
 from io import *
 from .tools import FeatureExtraction, GraphDBController, QueryProcessor
 import codecs
+from django.conf import settings as djangoSettings
 
 def index(request):
     return render(request, 'neo4japp/index.html')
@@ -34,6 +35,7 @@ def upload_done(request):
 
 def result(request):
     query = request.POST['query']
+    json = request.POST['json']
 
     """
     Send the 'raw' query to QueryProcessor.
@@ -42,6 +44,7 @@ def result(request):
         - process_data[1] = data returned from the database, the format is depended on types of query
     Each type of data will be handled differently as below.
     """
+
     process_data = QueryProcessor.process_query(query)
 
     if process_data[0] == "list":
@@ -49,9 +52,10 @@ def result(request):
 
     elif process_data[0] == "matplotlib":
         # Save image to static/image/result.png
-        static = 'static'
+        static = 'articleq/static'
         image_dir = 'image'
         file_name = 'result.png'
+        plt = process_data[1]
         create_dir = static + '/' + image_dir
         if not os.path.exists(create_dir): # Create the dir if there is no dir
             os.makedirs(create_dir)
