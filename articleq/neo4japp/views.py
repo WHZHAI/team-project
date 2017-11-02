@@ -65,6 +65,7 @@ def result(request):
         plt.savefig(file_path, transparent=True)
         file_path = image_dir + '/' + file_name # Return the static picture path back to result page
         return render(request, 'neo4japp/result.html', {'query': query, 'type': "image", 'data': file_path})
-    
+    elif process_data[0] == "incorrect syntax":
+        return render(request, 'neo4japp/query.html')
     else:
         return render(request, 'neo4japp/result.html', {'query': query, 'data': docs})

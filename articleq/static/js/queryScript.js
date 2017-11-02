@@ -131,7 +131,7 @@ input = new Awesomplete('input[id="query"]', {
 		return item;
     },
     // item: function (suggestion, input) {
-
+    //     if ()
     // },
     filter: function(text, input) {
         inputSplit = input.split(" ")

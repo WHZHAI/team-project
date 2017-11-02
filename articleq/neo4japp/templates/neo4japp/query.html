@@ -4,11 +4,18 @@
 {% block content %}
     <div class="jumbotron">
         <h1>Query</h1>
+        <div class="panel panel-default margin-top">
+            <div class="panel-heading"><b>Examples of query</b></div>
+            <div class="panel-body">
+                {% load staticfiles %}
+                <img src="{% static "image/query-example.png" %}" class="example-query-image"/>
+            </div>
+        </div>
         <form action="{% url 'result'%}" method="post">
             {% csrf_token %}
             <div class="row padding-top">
                 <div class="col-xs-10">
-                    <input type="text" class="form-control" placeholder="Ex. list all document names" name="query" id="query">
+                    <input type="text" class="form-control" placeholder="Ex. show the number of document written by each person" name="query" id="query">
                 </div>
                 <input class="btn btn-success col-xs-2" type="submit" value="Go" id="go" />
                 <input type="text" name="json" id="json" style="display:none;"/>

@@ -46,7 +46,7 @@ def process_query(query, json_text):
     # show the number of document mentions each person
 
     # Processs dynamic query 
-    if (json != ""):
+    if (json_text != ""):
         states = json.loads(json_text)
         # type: bar graph (the number of)
         if states[1]["phrase"] == "the number of":
@@ -102,6 +102,9 @@ def process_query(query, json_text):
             ax.set_ylabel('Total Articles')
             fig.autofmt_xdate(bottom=0.2, rotation=70, ha='right')
             return ["matplotlib", plt]
+        else:
+            #  incorrect syntax
+            return ["incorrect syntax", query]
 
 
 #specify organization x>when

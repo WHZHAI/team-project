@@ -22,3 +22,11 @@
 .main-div {
     margin: 0px 50px 0px 50px
 }
+
+.margin-top {
+    margin-top: 50px;
+}
+
+.example-query-image {
+    width: 50%;
+}
