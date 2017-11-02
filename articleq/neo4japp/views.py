@@ -4,6 +4,7 @@ from __future__ import absolute_import
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 import matplotlib as plt
+plt.use('Agg')
 import os
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from pylab import *
