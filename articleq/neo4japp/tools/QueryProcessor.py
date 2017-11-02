@@ -56,10 +56,6 @@ def process_query(query, json_text):
             print("label_1: ", label_1, "\nrelation: ", relation, "\nlabel_2: ", label_2)
             title = create_graph_title(states[1:])
             print("graph_title: ", title)
-        # label_1 = "DOC" 
-        # relation = "MENTIONS"
-        # label_2 = "PERSON"
-        # title = "This is title"
         search_result = dynamic_query_type_1(label_1, relation, label_2)
 
         # render graph
@@ -162,13 +158,19 @@ def match_person(relation):
 
 def dynamic_q_backward(label_1, relation, label_2):
     q = 'MATCH (' + label_2 + ':' + label_2 + ')-[:`' + relation + '`]->(' + label_1 + ':' + label_1 + ') '
-    q += 'RETURN ' + label_2 + '.name as x, count(' + label_1 + ') as y '
+    if label_2 == "DOC":
+        q += 'RETURN ' + label_2 + '.ID as x, count(' + label_1 + ') as y '
+    else:
+        q += 'RETURN ' + label_2 + '.name as x, count(' + label_1 + ') as y '
     q += 'ORDER BY y DESC '
     return q
 
 def dynamic_q_forward(label_1, relation, label_2):
     q = 'MATCH (' + label_1 + ':' + label_1 + ')-[:`' + relation + '`]->(' + label_2 + ':' + label_2 + ') '
-    q += 'RETURN ' + label_2 + '.name as x, count(' + label_1 + ') as y '
+    if label_2 == "DOC":
+        q += 'RETURN ' + label_2 + '.ID as x, count(' + label_1 + ') as y '
+    else:
+        q += 'RETURN ' + label_2 + '.name as x, count(' + label_1 + ') as y '
     q += 'ORDER BY y DESC '
     return q
 
@@ -202,6 +204,7 @@ def yield_x_y_z(q):
 def dynamic_query_type_1(label_1, relation, label_2, start_date = "", end_date = ""):
     q = dynamic_q_forward(label_1, relation, label_2)  
     search_result = []
+    print("forward: ", q)
     for each in yield_x_y(q):
         each_record = [each['x'], each['y']]
         search_result.append(each_record)
@@ -211,4 +214,5 @@ def dynamic_query_type_1(label_1, relation, label_2, start_date = "", end_date =
         for each in yield_x_y(q):
             each_record = [each['x'], each['y']]
             search_result.append(each_record)
+    print("backward: ", q)
     return search_result

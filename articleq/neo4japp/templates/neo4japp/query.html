@@ -9,6 +9,12 @@
             <div class="panel-body">
                 {% load staticfiles %}
                 <img src="{% static "image/query-example.png" %}" class="example-query-image"/>
+                <p>Other example</p>
+                <ul>
+                    <li>show the number of document that mentions each person</li>
+                    <li>show the number of person mentioned by each document</li>
+                    <li></li>
+                </ul>
             </div>
         </div>
         <form action="{% url 'result'%}" method="post">
