@@ -1,7 +1,6 @@
 from __future__ import absolute_import
 
 from django.contrib import admin
-from .models import Movie, Person
 
 # Register your models here.
 
@@ -35,13 +34,3 @@ class NodeHandleAdmin(admin.ModelAdmin):
 
     delete_object.short_description = "Delete the selected NodeHandle(s)"
 
-
-class MovieAdmin(NodeHandleAdmin):
-    pass
-
-
-class PersonAdmin(NodeHandleAdmin):
-    pass
-
-admin.site.register(Movie, MovieAdmin)
-admin.site.register(Person, PersonAdmin)
